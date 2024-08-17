@@ -24,10 +24,9 @@ const userSchema = new Schema({
       ref: 'Role'
     }],
 
-    state:{
+    status:{
         type:Boolean,
-        default: true,
-        required: true,
+        default: true
     }
 });
 

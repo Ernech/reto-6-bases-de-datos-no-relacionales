@@ -8,12 +8,17 @@ const roleSchema = new Schema({
         required:[true,'Role is required']
     },
 
-    state:{
+    status:{
         type:Boolean,
-        default: true,
-        required: true,
+        default: true
     }
 
 });
+
+roleSchema.methods.toJSON = function(){
+    const {__v,status,...data} = this.toObject();
+    
+    return data;
+}
 
 export const RoleModel = mongoose.model('Role',roleSchema);
