@@ -22,8 +22,10 @@ export class Server{
          this.app.use(express.urlencoded({extended:true}))
          //Middlewares
         
-         this.app.use(express.json());
-         this.app.use(express.urlencoded({extended:true}))
- 
+         this.app.listen(this.port,()=>{
+            console.log(`Server running on port ${this.port}`);
+        })
+
+    
     }
 }

@@ -3,7 +3,9 @@ import { MongoDatabase } from "./data/mongodb";
 import { Server } from "./presentation/server"
 
 
-()=>{}
+(()=>{
+    main()
+})()
 
 
 async function main(){
