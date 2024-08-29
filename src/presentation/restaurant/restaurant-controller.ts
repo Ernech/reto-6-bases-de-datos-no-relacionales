@@ -21,7 +21,7 @@ export class ResturantController{
     }
 
     createNewResturant =async(req:Request,res:Response)=>{
-        
+       
         const [error,restaurant]=RestaurantDTO.create(req.body);
 
         if(error || !restaurant) return res.status(400).json({result:false,msg:error,restaurant});

@@ -14,13 +14,13 @@ export class RestaurantDTO{
 
     static create(object:{[key:string]:any}):[string?,RestaurantDTO?]{
 
-        const {name,description,city,addres} = object;
+        const {name,description,city,address} = object;
 
         if(!name) return['Name is required,undefined'];
         if(!city) return ['City is required'];
-        if(!addres) return ['Addres is required'];   
+        if(!address) return ['Address is required'];   
 
-        return[undefined, new RestaurantDTO(name,description,city,addres)];
+        return[undefined, new RestaurantDTO(name,description,city,address)];
 
     }
 

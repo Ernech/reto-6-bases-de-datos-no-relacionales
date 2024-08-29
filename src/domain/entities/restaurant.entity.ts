@@ -8,6 +8,7 @@ export class RestaurantEnity{
         public description:string,
         public city: string,
         public address:string,
+        private averageRating:number,
         public reviews:ReviewEntity[],
         public contacts:string[],
     ){}
