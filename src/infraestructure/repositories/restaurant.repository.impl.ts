@@ -9,8 +9,8 @@ export class RestaurantRepositoryImpl implements RestaurantRepository{
 
     constructor(private readonly restaurantDataSource:RestaurantDataSource){}
 
-    createRestaurant(restaurantDTO: RestaurantDTO): Promise<RestaurantEnity> {
-        throw new Error("Method not implemented.");
+    async createRestaurant(restaurantDTO: RestaurantDTO): Promise<RestaurantEnity> {
+        return this.restaurantDataSource.createRestaurant(restaurantDTO);
     }
     editRestaurant(restaurantId: string, restaurantDTO: RestaurantDTO): Promise<RestaurantEnity> {
         throw new Error("Method not implemented.");
