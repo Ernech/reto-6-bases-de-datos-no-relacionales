@@ -1,5 +1,5 @@
 import { Request,Response } from "express";
-import { RestaurantDTO } from "../../domain/dto/restaurant.dto";
+import { RestaurantDTO } from "../../domain/dto/restaurant/restaurant.dto";
 import { RestaurantRepository } from "../../domain/repositories/restaurant.repository";
 import { CustomError } from "../../domain/errors/ecustom.errors";
 import { CreateRestaurant } from "../../domain/use-cases/restaurant/create-restaurant.use-case";

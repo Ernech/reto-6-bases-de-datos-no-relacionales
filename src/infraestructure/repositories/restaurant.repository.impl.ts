@@ -1,5 +1,5 @@
 import { RestaurantDataSource } from "../../domain/datasource/restaurant.datasource";
-import { RestaurantDTO } from "../../domain/dto/restaurant.dto";
+import { RestaurantDTO } from "../../domain/dto/restaurant/restaurant.dto";
 import { RestaurantEnity } from "../../domain/entities/restaurant.entity";
 import { RestaurantRepository } from "../../domain/repositories/restaurant.repository";
 

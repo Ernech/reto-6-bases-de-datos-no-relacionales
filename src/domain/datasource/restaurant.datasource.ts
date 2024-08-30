@@ -1,4 +1,4 @@
-import { RestaurantDTO } from "../dto/restaurant.dto";
+import { RestaurantDTO } from "../dto/restaurant/restaurant.dto";
 import { RestaurantEnity } from "../entities/restaurant.entity";
 
 

@@ -1,6 +1,6 @@
 import { RestaurantModel } from "../../data/models/restaurant";
 import { RestaurantDataSource } from "../../domain/datasource/restaurant.datasource";
-import { RestaurantDTO } from "../../domain/dto/restaurant.dto";
+import { RestaurantDTO } from "../../domain/dto/restaurant/restaurant.dto";
 import { RestaurantEnity } from "../../domain/entities/restaurant.entity";
 import { CustomError } from "../../domain/errors/ecustom.errors";
 import { RestaurantEntityFromModel } from "../mappers/restaurant.mapper";
