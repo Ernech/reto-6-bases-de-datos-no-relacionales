@@ -1,4 +1,5 @@
 import { BcryptAdapter } from "../../config/bcrypt";
+import { RoleModel } from "../../data/models/role";
 import { UserModel } from "../../data/models/user";
 import { AuthDatasource } from "../../domain/datasource/auth.datasource";
 import { LoginUserDto } from "../../domain/dto/auth/auth.dto";
@@ -48,11 +49,13 @@ export class AuthDatasourceImpl implements AuthDatasource{
 
             const exists = await UserModel.findOne({ email });
             if (exists) throw CustomError.badRequest('User already exitst');
-
+            const userRole = await RoleModel.findOne({role:'USER_ROLE'});
+            if(!userRole) throw CustomError.badRequest('User role error');
             const user = await UserModel.create({
                 name,
                 email,
-                password: this.hashPassword(password)
+                password: this.hashPassword(password),
+                roles:[userRole._id]
             });
 
             await user.save();
