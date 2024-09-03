@@ -1,5 +1,4 @@
 import { NextFunction, Request, Response } from "express";
-
 import { UserModel } from "../../data/models/user";
 import { JwtAdapter } from "../../config/jwt";
 
