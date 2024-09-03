@@ -1,3 +1,5 @@
+import { ReviewDTO } from "../dto/review/review.dto";
+import { ReviewEntity } from "../entities/review.entity";
 
 export abstract class ReviewRepository{
 
