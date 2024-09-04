@@ -1,3 +1,4 @@
+import { UserEntity } from "./user.entity";
 
 
 export class ReviewEntity{
@@ -5,7 +6,7 @@ export class ReviewEntity{
 
 constructor(
     public id:string,
-    public username:string,
+    public user:UserEntity,
     public rating:number, 
     public comment:string
 ){}

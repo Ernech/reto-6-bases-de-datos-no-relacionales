@@ -12,7 +12,7 @@ export class ReviewMapper{
         if(!rating) throw CustomError.badRequest('Missing rating');
         if(!user) throw CustomError.badRequest('Missing User');
 
-        return new ReviewEntity(_id,user.name,rating,comment);
+        return new ReviewEntity(_id,user,rating,comment);
 
     }
 }
