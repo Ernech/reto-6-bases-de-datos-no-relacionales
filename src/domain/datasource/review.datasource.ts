@@ -5,7 +5,7 @@ import { ReviewEntity } from "../entities/review.entity";
 
 export abstract class ReviewDatasource{
 
-        abstract createReview(reviewDTO:ReviewDTO):Promise<ReviewEntity>
+        abstract createReview(reviewDTO:ReviewDTO,userId:string):Promise<ReviewEntity>
 
         abstract updateReview(reviewDTO:ReviewDTO,reviewId:string):Promise<ReviewEntity>
 

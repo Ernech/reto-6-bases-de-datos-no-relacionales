@@ -6,7 +6,7 @@ export class ReviewEntity{
 
 constructor(
     public id:string,
-    public user:UserEntity,
+    public user:string,
     public rating:number, 
     public comment:string
 ){}

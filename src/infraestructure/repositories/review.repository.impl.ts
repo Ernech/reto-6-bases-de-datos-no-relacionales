@@ -10,8 +10,8 @@ export class ReviewRepositoryImpl implements ReviewRepository{
         private readonly reviewDatasource:ReviewDatasource
     ){}
 
-   async createReview(reviewDTO: ReviewDTO): Promise<ReviewEntity> {
-        return await this.reviewDatasource.createReview(reviewDTO);
+   async createReview(reviewDTO: ReviewDTO, userId:string): Promise<ReviewEntity> {
+        return await this.reviewDatasource.createReview(reviewDTO, userId);
     }
     async updateReview(reviewDTO: ReviewDTO, reviewId: string): Promise<ReviewEntity> {
         return await this.reviewDatasource.updateReview(reviewDTO,reviewId);
