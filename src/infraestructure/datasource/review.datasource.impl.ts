@@ -10,9 +10,11 @@ import { ReviewMapper } from "../mappers/review.mapper";
 export class ReviewDataSourceImpl implements ReviewDatasource{
     async createReview(reviewDTO: ReviewDTO, userId:string): Promise<ReviewEntity> {
         try {
-            const restaurant = await RestaurantModel.findById(reviewDTO.restaurantId); 
+            const restaurant = await RestaurantModel.findById(reviewDTO.restaurant); 
             if(!restaurant) throw CustomError.badRequest("The restaurant does not exists"); 
+            
             const newReview = await ReviewModel.create({...reviewDTO,user:userId});
+           
             await newReview.save();
             const restaurantReviews = [...restaurant.Reviews, newReview._id];
             const newRating = (restaurant.averageRating + reviewDTO.rating)/restaurantReviews.length;
