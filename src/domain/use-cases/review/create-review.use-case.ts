@@ -4,7 +4,7 @@ import { ReviewRepository } from "../../repositories/review.reposotiry";
 
 interface CreateReviewInterface{
 
-    execute(reviewDTO:ReviewDTO,userId:string):Promise<ReviewEntity>
+    execute(reviewDTO:ReviewDTO):Promise<ReviewEntity>
 }
 
 
@@ -14,8 +14,8 @@ export class CreateReview implements CreateReviewInterface{
         private readonly reviewRepository:ReviewRepository
     ){}
 
-    execute(reviewDTO: ReviewDTO, userId: string): Promise<ReviewEntity> {
-        const newReview = this.reviewRepository.createReview(reviewDTO,userId);
+    execute(reviewDTO: ReviewDTO): Promise<ReviewEntity> {
+        const newReview = this.reviewRepository.createReview(reviewDTO,reviewDTO.userId);
 
         return newReview;
     }
