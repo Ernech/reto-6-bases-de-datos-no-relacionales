@@ -84,7 +84,7 @@ export class RestaurantDataSourceImpl implements RestaurantDataSource{
     }
     async searchRestaurants(restaurantName: string): Promise<RestaurantEnity[]> {
        try {
-        const  restaurants = await RestaurantModel.find({name:restaurantName});
+        const  restaurants = await RestaurantModel.find({name:restaurantName}).populate('Review');
         return restaurants.map(restaurant=>RestaurantEntityFromModel.restaurantEntityObject(restaurant));
        } catch (error) {
         if(error instanceof CustomError){

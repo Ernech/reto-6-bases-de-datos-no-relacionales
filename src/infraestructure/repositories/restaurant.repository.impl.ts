@@ -12,20 +12,20 @@ export class RestaurantRepositoryImpl implements RestaurantRepository{
     async createRestaurant(restaurantDTO: RestaurantDTO): Promise<RestaurantEnity> {
         return this.restaurantDataSource.createRestaurant(restaurantDTO);
     }
-    editRestaurant(restaurantId: string, restaurantDTO: RestaurantDTO): Promise<RestaurantEnity> {
-        throw new Error("Method not implemented.");
+    async editRestaurant(restaurantId: string, restaurantDTO: RestaurantDTO): Promise<RestaurantEnity> {
+        return await this.restaurantDataSource.editRestaurant(restaurantId,restaurantDTO);
     }
-    deleteRestaurant(restaurantId: string): Promise<RestaurantEnity> {
-        throw new Error("Method not implemented.");
+    async deleteRestaurant(restaurantId: string): Promise<RestaurantEnity> {
+        return await this.restaurantDataSource.deleteRestaurant(restaurantId);
     }
-    searchRestaurantById(restaurantId: string): Promise<RestaurantEnity> {
-        throw new Error("Method not implemented.");
+    async searchRestaurantById(restaurantId: string): Promise<RestaurantEnity> {
+        return await this.restaurantDataSource.searchRestaurantById(restaurantId);
     }
-    getRestaurants(offset: number, limit: number): Promise<RestaurantEnity[]> {
-        throw new Error("Method not implemented.");
+    async getRestaurants(offset: number, limit: number): Promise<RestaurantEnity[]> {
+        return await this.restaurantDataSource.getRestaurants(offset,limit);
     }
-    searchRestaurants(restaurantName: string): Promise<RestaurantEnity[]> {
-        throw new Error("Method not implemented.");
+    async searchRestaurants(restaurantName: string): Promise<RestaurantEnity[]> {
+        return await this.restaurantDataSource.searchRestaurants(restaurantName);
     }
     
 }
