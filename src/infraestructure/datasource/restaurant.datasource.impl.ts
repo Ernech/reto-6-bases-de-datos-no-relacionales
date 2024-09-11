@@ -24,20 +24,74 @@ export class RestaurantDataSourceImpl implements RestaurantDataSource{
         throw CustomError.internalServer();
        }
     }
-    editRestaurant(restaurantId: string, restaurantDTO: RestaurantDTO): Promise<RestaurantEnity> {
-        throw new Error("Method not implemented.");
+    async editRestaurant(restaurantId: string, restaurantDTO: RestaurantDTO): Promise<RestaurantEnity> {
+       try {
+        const restaurantEdited = await RestaurantModel.findByIdAndUpdate(restaurantId,{...restaurantDTO},{new:true});
+       
+        if(!restaurantEdited){
+            throw CustomError.notFound(`The restaurant with the id '${restaurantId}' does not exists`)
+        }
+        return RestaurantEntityFromModel.restaurantEntityObject(restaurantEdited);
+        
+       } catch (error) {
+        if(error instanceof CustomError){
+            throw error;
+        }
+        throw CustomError.internalServer();
+       }
     }
-    deleteRestaurant(restaurantId: string): Promise<RestaurantEnity> {
-        throw new Error("Method not implemented.");
+    async deleteRestaurant(restaurantId: string): Promise<RestaurantEnity> {
+     try {
+        const restaurantDeleted = await RestaurantModel.findByIdAndUpdate(restaurantId,{status:false},{new:true});
+        if(!restaurantDeleted){
+          throw CustomError.notFound(`The restaurant with the id '${restaurantId}' does not exists`)
+      }
+      return RestaurantEntityFromModel.restaurantEntityObject(restaurantDeleted);
+     } catch (error) {
+        if(error instanceof CustomError){
+            throw error;
+        }
+        throw CustomError.internalServer();
+     }
     }
-    searchRestaurantById(restaurantId: string): Promise<RestaurantEnity> {
-        throw new Error("Method not implemented.");
+
+    async searchRestaurantById(restaurantId: string): Promise<RestaurantEnity> {
+
+       try {
+        const restaurant = RestaurantModel.findOne({_id:restaurantId,status:true});
+        if(!restaurant){
+            throw CustomError.notFound(`The restaurant with the id '${restaurantId}' does not exists`)
+        }
+        return RestaurantEntityFromModel.restaurantEntityObject(restaurant);
+       } catch (error) {
+        if(error instanceof CustomError){
+            throw error;
+        }
+        throw CustomError.internalServer();
+       }
+    
     }
-    getRestaurants(offset: number, limit: number): Promise<RestaurantEnity[]> {
-        throw new Error("Method not implemented.");
+    async getRestaurants(offset: number, limit: number): Promise<RestaurantEnity[]> {
+        try {
+            const restaurants = await RestaurantModel.find({status:true}).skip(offset).limit(limit);
+            return restaurants.map(restaurant=>RestaurantEntityFromModel.restaurantEntityObject(restaurant));
+        } catch (error) {
+            if(error instanceof CustomError){
+                throw error;
+            }
+            throw CustomError.internalServer();
+        }
     }
-    searchRestaurants(restaurantName: string): Promise<RestaurantEnity[]> {
-        throw new Error("Method not implemented.");
+    async searchRestaurants(restaurantName: string): Promise<RestaurantEnity[]> {
+       try {
+        const  restaurants = await RestaurantModel.find({name:restaurantName});
+        return restaurants.map(restaurant=>RestaurantEntityFromModel.restaurantEntityObject(restaurant));
+       } catch (error) {
+        if(error instanceof CustomError){
+            throw error;
+        }
+        throw CustomError.internalServer();
+       }
     }
 
     
