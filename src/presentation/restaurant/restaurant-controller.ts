@@ -55,6 +55,7 @@ export class ResturantController{
 
     getRestaurants=async(req:Request,res:Response)=>{
         
+        
         const {limit=5,offset=0}=req.query;
         new GetRestaurants(this.restaurantRepository).execute(Number(offset),Number(limit))
         .then(restaurants=>res.status(200).json({result:true,msg:'Se han recuperado los restaurantes',restaurants}))

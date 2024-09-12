@@ -58,10 +58,22 @@ export class RestaurantDataSourceImpl implements RestaurantDataSource{
     async searchRestaurantById(restaurantId: string): Promise<RestaurantEnity> {
 
        try {
-        const restaurant = RestaurantModel.findOne({_id:restaurantId,status:true});
+       
+        const restaurant = await RestaurantModel.findOne({ _id: restaurantId, status: true })
+        .populate({
+            path: 'Reviews',
+            model:'Review',
+            populate: {
+                path: 'user',
+                model: 'User' 
+            }
+        });
+       
+       
         if(!restaurant){
             throw CustomError.notFound(`The restaurant with the id '${restaurantId}' does not exists`)
         }
+      
         return RestaurantEntityFromModel.restaurantEntityObject(restaurant);
        } catch (error) {
         if(error instanceof CustomError){
