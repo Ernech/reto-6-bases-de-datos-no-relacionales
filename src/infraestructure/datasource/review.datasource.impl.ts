@@ -15,7 +15,7 @@ export class ReviewDataSourceImpl implements ReviewDatasource{
             
             const newReview = await ReviewModel.create({...reviewDTO,user:userId});
            
-            await newReview.save();
+            (await newReview.save()).populate('user');
             const restaurantReviews = [...restaurant.Reviews, newReview._id];
             const newRating = (restaurant.averageRating + reviewDTO.rating)/restaurantReviews.length;
             await RestaurantModel.findByIdAndUpdate(restaurant._id,{Reviews:restaurantReviews,averageRating:newRating});

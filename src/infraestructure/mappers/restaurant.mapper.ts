@@ -10,7 +10,11 @@ export class RestaurantEntityFromModel{
         if(!_id)  throw CustomError.badRequest('Missing id');
         if(!name) CustomError.badRequest('Missing name');
         if(!address) CustomError.badRequest('Missing address');
-        const reviewsEntities=Reviews.map((review:object) =>ReviewMapper.ReviewEntityFromMapper(review));
+        let reviewsEntities=[]
+        if(Reviews && Reviews.length>0){
+          
+           reviewsEntities =Reviews.map((review:object) =>ReviewMapper.ReviewEntityFromMapper(review));
+        }
         return new RestaurantEnity(_id,name,description,city,address, averageRating,reviewsEntities, contacts);
     }
 

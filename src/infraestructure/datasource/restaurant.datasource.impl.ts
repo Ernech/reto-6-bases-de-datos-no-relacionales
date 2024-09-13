@@ -26,7 +26,14 @@ export class RestaurantDataSourceImpl implements RestaurantDataSource{
     }
     async editRestaurant(restaurantId: string, restaurantDTO: RestaurantDTO): Promise<RestaurantEnity> {
        try {
-        const restaurantEdited = await RestaurantModel.findByIdAndUpdate(restaurantId,{...restaurantDTO},{new:true});
+        const restaurantEdited = await RestaurantModel.findByIdAndUpdate(restaurantId,{...restaurantDTO},{new:true}).populate({
+            path: 'Reviews',
+            model:'Review',
+            populate: {
+                path: 'user',
+                model: 'User' 
+            }
+        });
        
         if(!restaurantEdited){
             throw CustomError.notFound(`The restaurant with the id '${restaurantId}' does not exists`)
@@ -35,6 +42,7 @@ export class RestaurantDataSourceImpl implements RestaurantDataSource{
         
        } catch (error) {
         if(error instanceof CustomError){
+           
             throw error;
         }
         throw CustomError.internalServer();
@@ -42,7 +50,14 @@ export class RestaurantDataSourceImpl implements RestaurantDataSource{
     }
     async deleteRestaurant(restaurantId: string): Promise<RestaurantEnity> {
      try {
-        const restaurantDeleted = await RestaurantModel.findByIdAndUpdate(restaurantId,{status:false},{new:true});
+        const restaurantDeleted = await RestaurantModel.findByIdAndUpdate(restaurantId,{status:false},{new:true}).populate({
+            path: 'Reviews',
+            model:'Review',
+            populate: {
+                path: 'user',
+                model: 'User' 
+            }
+        });
         if(!restaurantDeleted){
           throw CustomError.notFound(`The restaurant with the id '${restaurantId}' does not exists`)
       }
@@ -85,7 +100,14 @@ export class RestaurantDataSourceImpl implements RestaurantDataSource{
     }
     async getRestaurants(offset: number, limit: number): Promise<RestaurantEnity[]> {
         try {
-            const restaurants = await RestaurantModel.find({status:true}).skip(offset).limit(limit);
+            const restaurants = await RestaurantModel.find({status:true}).skip(offset).limit(limit) .populate({
+                path: 'Reviews',
+                model:'Review',
+                populate: {
+                    path: 'user',
+                    model: 'User' 
+                }
+            });
             return restaurants.map(restaurant=>RestaurantEntityFromModel.restaurantEntityObject(restaurant));
         } catch (error) {
             if(error instanceof CustomError){
@@ -96,7 +118,14 @@ export class RestaurantDataSourceImpl implements RestaurantDataSource{
     }
     async searchRestaurants(restaurantName: string): Promise<RestaurantEnity[]> {
        try {
-        const  restaurants = await RestaurantModel.find({name:restaurantName}).populate('Review');
+        const  restaurants = await RestaurantModel.find({name:restaurantName}) .populate({
+            path: 'Reviews',
+            model:'Review',
+            populate: {
+                path: 'user',
+                model: 'User' 
+            }
+        });
         return restaurants.map(restaurant=>RestaurantEntityFromModel.restaurantEntityObject(restaurant));
        } catch (error) {
         if(error instanceof CustomError){

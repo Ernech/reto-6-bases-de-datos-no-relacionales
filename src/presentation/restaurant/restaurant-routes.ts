@@ -19,8 +19,8 @@ export class RestaurantRoutes{
         router.put('/:id',[AuthMiddleware.validateJwt,CheckRoles.hasRole(['ADMIN_ROLE']),IsValidMongoId.checkId],restaurantController.editRestaurant);
         router.delete('/:id',[AuthMiddleware.validateJwt,CheckRoles.hasRole(['ADMIN_ROLE']),IsValidMongoId.checkId],restaurantController.deleteRestaurant);
         router.get('/all',restaurantController.getRestaurants);
-        router.get('/:id',[IsValidMongoId.checkId],restaurantController.getRestaurantById);
         router.get('/search',restaurantController.searchRestaurant);
+        router.get('/:id',[IsValidMongoId.checkId],restaurantController.getRestaurantById);
         return router;
 
         
