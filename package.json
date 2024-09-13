@@ -20,6 +20,7 @@
   },
   "dependencies": {
     "express": "^4.19.2",
-    "mongoose": "^8.5.3"
+    "mongoose": "^8.5.3",
+    "reto-6": "file:"
   }
 }
