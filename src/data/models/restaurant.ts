@@ -10,6 +10,7 @@ const restaurantSchema = new Schema({
 
     description:{
         type: String,
+        default:""
     },
     
     city:{
@@ -29,12 +30,14 @@ const restaurantSchema = new Schema({
 
     Reviews:[{
       type: Schema.Types.ObjectId,
-      ref: 'Review'
+      ref: 'Review',
+      default:[]
     }],
 
     Contacts:[{
       type: Schema.Types.ObjectId,
-      ref: 'Contact'
+      ref: 'Contact',
+      default:[]
     }],
 
     status:{

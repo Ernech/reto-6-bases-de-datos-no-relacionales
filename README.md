@@ -1,6 +1,6 @@
-# Node js Rest servier with Typescript, MongoDB, and Clean Architecture 
+# Reto 6 digital NAO
 
-<!-- ## Dev
+## Dev
 1. Copy the ```.env.example``` and rename it to ```.env```
 2. Set your enviroment variables in the ```.env``` file.
 3. Execute 
@@ -13,5 +13,5 @@ docker-compose up -d
 ```
 5. Execute project.
 ```
-npm run start:dev
-``` -->
+npm run dev
+``` 

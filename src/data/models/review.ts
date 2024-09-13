@@ -21,6 +21,11 @@ const reviewSchema = new Schema({
     status:{
         type:Boolean,
         default:true
+    },
+    restaurant:{
+      type:Schema.Types.ObjectId,
+      required:true,
+      ref:'Restaurant'
     }
 
 });
