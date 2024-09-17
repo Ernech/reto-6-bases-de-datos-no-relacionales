@@ -29,14 +29,50 @@ export class ReviewDataSourceImpl implements ReviewDatasource{
         }
 
     }
-    updateReview(reviewDTO: ReviewDTO, reviewId: string): Promise<ReviewEntity> {
-        throw new Error("Method not implemented.");
+   async updateReview(reviewDTO: ReviewDTO, reviewId: string,userId:string): Promise<ReviewEntity> {
+        try{
+              const review = await ReviewModel.findOne({_id:reviewId,user:userId,status:true});
+              if(!review) throw CustomError.notFound('Review Not found');
+              review.rating=reviewDTO.rating;
+              review.comment=reviewDTO.comment;
+              review.save();
+
+              return ReviewMapper.ReviewEntityFromMapper(review);
+              
+        }catch(error){
+            if(error instanceof CustomError){
+                throw error;
+            }
+            throw CustomError.internalServer();
+        }
     }
-    deleteReview(reviewId: string): Promise<ReviewEntity> {
-        throw new Error("Method not implemented.");
+    async deleteReview(reviewId: string,userId:string): Promise<ReviewEntity> {
+        try{
+            const review = await ReviewModel.findOne({_id:reviewId,user:userId,status:false});
+            if(!review) throw CustomError.notFound('Review Not found');
+
+            review.status=false;
+            review.save();
+            return ReviewMapper.ReviewEntityFromMapper(review);
+
+        }catch(error){
+            if(error instanceof CustomError){
+                throw error;
+            }
+            throw CustomError.internalServer();
+        }
     }
-    getReviewsByRestaurant(restaurantId: string): Promise<ReviewEntity[]> {
-        throw new Error("Method not implemented.");
+   async getReviewsByRestaurant(restaurantId: string): Promise<ReviewEntity[]> {
+        try {
+            const reviews = await ReviewModel.find({restaurant:restaurantId,status:true});
+            
+            return reviews.map(review=>ReviewMapper.ReviewEntityFromMapper(review));
+        } catch (error) {
+            if(error instanceof CustomError){
+                throw error;
+            }
+            throw CustomError.internalServer();
+        }
     }
 
 
