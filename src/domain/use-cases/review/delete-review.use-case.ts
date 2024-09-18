@@ -1,11 +1,10 @@
-import { ReviewDTO } from "../../dto/review/review.dto";
 import { ReviewEntity } from "../../entities/review.entity";
 import { ReviewRepository } from "../../repositories/review.reposotiry";
 
 
 interface DelteReviewInterface{
 
-    execute(eviewId:string,userId:string):Promise<ReviewEntity>;
+    execute(reviewId:string,userId:string):Promise<ReviewEntity>;
 
 }
 
