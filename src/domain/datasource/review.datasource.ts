@@ -7,7 +7,7 @@ export abstract class ReviewDatasource{
 
         abstract createReview(reviewDTO:ReviewDTO,userId:string):Promise<ReviewEntity>
 
-        abstract updateReview(reviewDTO:ReviewDTO,reviewId:string,userId:string):Promise<ReviewEntity>
+        abstract updateReview(reviewDTO:ReviewDTO,reviewId:string):Promise<ReviewEntity>
 
         abstract deleteReview(reviewId:string,userId:string):Promise<ReviewEntity>
 

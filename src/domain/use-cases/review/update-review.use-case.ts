@@ -5,7 +5,7 @@ import { ReviewRepository } from "../../repositories/review.reposotiry";
 
 interface UpdateReviewInterface{
 
-    execute(reviewDTO:ReviewDTO,reviewId:string,userId:string):Promise<ReviewEntity>;
+    execute(reviewDTO:ReviewDTO,reviewId:string):Promise<ReviewEntity>;
 
 }
 
@@ -14,8 +14,8 @@ export class UpdateReview implements UpdateReviewInterface{
 
     constructor(private readonly reviewRepository:ReviewRepository){}
         
-    execute(reviewDTO: ReviewDTO, reviewId: string, userId: string): Promise<ReviewEntity> {
-        return this.reviewRepository.updateReview(reviewDTO,reviewId,userId);
+    execute(reviewDTO: ReviewDTO, reviewId: string): Promise<ReviewEntity> {
+        return this.reviewRepository.updateReview(reviewDTO,reviewId);
     }
 
 }

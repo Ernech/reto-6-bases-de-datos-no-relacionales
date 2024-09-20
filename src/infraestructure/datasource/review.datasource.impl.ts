@@ -29,9 +29,9 @@ export class ReviewDataSourceImpl implements ReviewDatasource{
         }
 
     }
-   async updateReview(reviewDTO: ReviewDTO, reviewId: string,userId:string): Promise<ReviewEntity> {
+   async updateReview(reviewDTO: ReviewDTO, reviewId: string): Promise<ReviewEntity> {
         try{
-              const review = await ReviewModel.findOne({_id:reviewId,user:userId,status:true});
+              const review = await ReviewModel.findOne({_id:reviewId,user:reviewDTO.userId,status:true});
               if(!review) throw CustomError.notFound('Review Not found');
               review.rating=reviewDTO.rating;
               review.comment=reviewDTO.comment;
