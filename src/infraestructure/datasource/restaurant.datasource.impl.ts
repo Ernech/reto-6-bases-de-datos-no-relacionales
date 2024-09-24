@@ -53,6 +53,7 @@ export class RestaurantDataSourceImpl implements RestaurantDataSource{
         const restaurantDeleted = await RestaurantModel.findByIdAndUpdate(restaurantId,{status:false},{new:true}).populate({
             path: 'Reviews',
             model:'Review',
+            match: { status: true },
             populate: {
                 path: 'user',
                 model: 'User' 
@@ -78,6 +79,7 @@ export class RestaurantDataSourceImpl implements RestaurantDataSource{
         .populate({
             path: 'Reviews',
             model:'Review',
+            match: { status: true },
             populate: {
                 path: 'user',
                 model: 'User' 
@@ -103,6 +105,7 @@ export class RestaurantDataSourceImpl implements RestaurantDataSource{
             const restaurants = await RestaurantModel.find({status:true}).skip(offset).limit(limit) .populate({
                 path: 'Reviews',
                 model:'Review',
+                match: { status: true },
                 populate: {
                     path: 'user',
                     model: 'User' 
@@ -121,6 +124,7 @@ export class RestaurantDataSourceImpl implements RestaurantDataSource{
         const  restaurants = await RestaurantModel.find({name:restaurantName}) .populate({
             path: 'Reviews',
             model:'Review',
+            match: { status: true },
             populate: {
                 path: 'user',
                 model: 'User' 
