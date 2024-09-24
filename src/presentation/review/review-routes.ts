@@ -13,7 +13,10 @@ export class ReviewRoutes{
         const reviewDatasource = new ReviewDataSourceImpl();
         const reviewRepository = new ReviewRepositoryImpl(reviewDatasource);
         const reviewController = new ReviewController(reviewRepository);
-        router.post('/',[AuthMiddleware.validateJwt],reviewController.createNewReview)
+        router.post('/',[AuthMiddleware.validateJwt],reviewController.createNewReview);
+        router.put('/:id',[AuthMiddleware.validateJwt],reviewController.editReview);
+        router.get('/:id',reviewController.getReviewsByRestaurant);
+        router.delete('/:id',[AuthMiddleware.validateJwt],reviewController.deleteReview);
         return router;
 
         
