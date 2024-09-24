@@ -2,7 +2,8 @@ import { Router } from "express";
 import { ReviewDataSourceImpl } from "../../infraestructure/datasource/review.datasource.impl";
 import { ReviewRepositoryImpl } from "../../infraestructure/repositories/review.repository.impl";
 import { ReviewController } from "./review-controller";
-import { AuthMiddleware } from "../middlewares/auth.middlewares";
+import { AuthMiddleware } from "../middlewares/auth.middleware";
+import { IsValidMongoId } from "../middlewares/mongoId.middleware";
 
 
 export class ReviewRoutes{
@@ -14,9 +15,9 @@ export class ReviewRoutes{
         const reviewRepository = new ReviewRepositoryImpl(reviewDatasource);
         const reviewController = new ReviewController(reviewRepository);
         router.post('/',[AuthMiddleware.validateJwt],reviewController.createNewReview);
-        router.put('/:id',[AuthMiddleware.validateJwt],reviewController.editReview);
-        router.get('/:id',reviewController.getReviewsByRestaurant);
-        router.delete('/:id',[AuthMiddleware.validateJwt],reviewController.deleteReview);
+        router.put('/:id',[IsValidMongoId.checkId,AuthMiddleware.validateJwt],reviewController.editReview);
+        router.get('/:id',[IsValidMongoId.checkId],reviewController.getReviewsByRestaurant);
+        router.delete('/:id',[IsValidMongoId.checkId,AuthMiddleware.validateJwt],reviewController.deleteReview);
         return router;
 
         
