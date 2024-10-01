@@ -12,7 +12,7 @@ export class RestaurantDataSourceImpl implements RestaurantDataSource{
 
             const newRestaurant = await RestaurantModel.create(restaurantDTO);
 
-            newRestaurant.save();
+            await newRestaurant.save();
 
             return RestaurantEntityFromModel.restaurantEntityObject(newRestaurant);
 
