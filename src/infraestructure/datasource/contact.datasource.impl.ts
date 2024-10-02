@@ -22,7 +22,8 @@ export class ContactDatasourceImpl implements ContactDatasource{
             await newContact.save()
             const restaurantContacts = [...restaurantFound.Contacts,newContact];
             await RestaurantModel.findByIdAndUpdate({_id:restaurant,Contacts:restaurantContacts});
-            return ContactMapper.ContactEntityFromObject(newContact)
+            return ContactMapper.ContactEntityFromObject(newContact);
+            
         } catch (error) {
             if(error instanceof CustomError){
                 throw error;
@@ -30,14 +31,49 @@ export class ContactDatasourceImpl implements ContactDatasource{
             throw CustomError.internalServer();
         }
     }
-    updateContact(contactDTO: ContactDTO, contactId: string): Promise<ContactEntity> {
-        throw new Error("Method not implemented.");
+    async updateContact(contactDTO: ContactDTO, contactId: string): Promise<ContactEntity> {
+        try {
+            const contact = await ContactModel.findOne({_id:contactId,status:true});
+            if(!contact){
+                throw CustomError.notFound(`The contact ${contactId} does not exists`);
+            }
+            const contactEdited = await ContactModel.findByIdAndUpdate(contactId,{...contactDTO},{new:true});
+            return ContactMapper.ContactEntityFromObject({...contactEdited});
+        } catch (error) {
+            if(error instanceof CustomError){
+                throw error;
+            }
+            throw CustomError.internalServer();
+        }
     }
-    deleteContact(contactId: string): Promise<ContactEntity> {
-        throw new Error("Method not implemented.");
+    async deleteContact(contactId: string): Promise<ContactEntity> {
+        try {
+            const deletedContact = await ContactModel.findByIdAndUpdate(contactId,{status:false},{new:true});
+            if(!deletedContact){
+                throw CustomError.notFound(`The contact with the id ${contactId} does not exists`);
+                
+            }
+            return ContactMapper.ContactEntityFromObject(deletedContact);
+        } catch (error) {
+            if(error instanceof CustomError){
+                throw error;
+            }
+            throw CustomError.internalServer();
+        }
     }
-    getContactsByRestaurant(restaurantId: string): Promise<ContactEntity[]> {
-        throw new Error("Method not implemented.");
+    async getContactsByRestaurant(restaurantId: string): Promise<ContactEntity[]> {
+        try {
+            const restaurant = await RestaurantModel.findOne({_id:restaurantId,status:true});
+            if(!restaurant){
+                throw CustomError.notFound(`The restaurant with the id: ${restaurantId}`);
+            }
+            return restaurant.Contacts.map(contact=>ContactMapper.ContactEntityFromObject(contact)); 
+        } catch (error) {
+            if(error instanceof CustomError){
+                throw error;
+            }
+            throw CustomError.internalServer();
+        }
     }
     
 }
