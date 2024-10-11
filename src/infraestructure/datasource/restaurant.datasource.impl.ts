@@ -29,10 +29,15 @@ export class RestaurantDataSourceImpl implements RestaurantDataSource{
         const restaurantEdited = await RestaurantModel.findByIdAndUpdate(restaurantId,{...restaurantDTO},{new:true}).populate({
             path: 'Reviews',
             model:'Review',
+            match: { status: true },
             populate: {
                 path: 'user',
                 model: 'User' 
             }
+        }).populate({
+            path:'Contacts',
+            model:'Contact',
+            match: { status: true },
         });
        
         if(!restaurantEdited){
@@ -41,6 +46,7 @@ export class RestaurantDataSourceImpl implements RestaurantDataSource{
         return RestaurantEntityFromModel.restaurantEntityObject(restaurantEdited);
         
        } catch (error) {
+        console.log(error);
         if(error instanceof CustomError){
            
             throw error;
@@ -58,6 +64,10 @@ export class RestaurantDataSourceImpl implements RestaurantDataSource{
                 path: 'user',
                 model: 'User' 
             }
+        }).populate({
+            path:'Contacts',
+            model:'Contact',
+            match: { status: true },
         });
         if(!restaurantDeleted){
           throw CustomError.notFound(`The restaurant with the id '${restaurantId}' does not exists`)
@@ -84,6 +94,10 @@ export class RestaurantDataSourceImpl implements RestaurantDataSource{
                 path: 'user',
                 model: 'User' 
             }
+        }).populate({
+            path:'Contacts',
+            model:'Contact',
+            match: { status: true },
         });
        
        
@@ -110,6 +124,10 @@ export class RestaurantDataSourceImpl implements RestaurantDataSource{
                     path: 'user',
                     model: 'User' 
                 }
+            }).populate({
+                path:'Contacts',
+                model:'Contact',
+                match: { status: true },
             });
             return restaurants.map(restaurant=>RestaurantEntityFromModel.restaurantEntityObject(restaurant));
         } catch (error) {
@@ -129,6 +147,10 @@ export class RestaurantDataSourceImpl implements RestaurantDataSource{
                 path: 'user',
                 model: 'User' 
             }
+        }).populate({
+            path:'Contacts',
+            model:'Contact',
+            match: { status: true },
         });
         return restaurants.map(restaurant=>RestaurantEntityFromModel.restaurantEntityObject(restaurant));
        } catch (error) {

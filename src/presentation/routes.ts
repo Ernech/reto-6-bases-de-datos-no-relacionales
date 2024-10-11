@@ -3,6 +3,7 @@ import { AuthRoutes } from "./auth/auth-routes";
 import { RestaurantRoutes } from "./restaurant/restaurant-routes";
 import { UserRoutes } from "./user/user-routes";
 import { ReviewRoutes } from "./review/review-routes";
+import { ContactRoutes } from "./contact/contact-routes";
 
 
 
@@ -15,6 +16,7 @@ export class AppRoutes{
         router.use('/api/restaurant', RestaurantRoutes.routes);
         router.use('/api/review', ReviewRoutes.routes);
         router.use('/api/user', UserRoutes.routes);
+        router.use('/api/contact', ContactRoutes.routes);
         return router;
     }
 

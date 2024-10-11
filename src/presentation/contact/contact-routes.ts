@@ -8,7 +8,7 @@ import { CheckRoles } from "../middlewares/has-role.middleware";
 
 export class ContactRoutes{
 
-    static getRoutes():Router{
+    static routes():Router{
         const contactDatasource = new ContactDatasourceImpl();
         const contactRepository = new ContactRepositoryImpl(contactDatasource);
         const contactController = new ContactController(contactRepository);

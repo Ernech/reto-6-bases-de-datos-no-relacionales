@@ -25,5 +25,5 @@ contactSchema.methods.toJSON = function(){
     return data;
 }
 
-export const ContactModel = mongoose.model('User', contactSchema);
+export const ContactModel = mongoose.model('Contact', contactSchema);
 

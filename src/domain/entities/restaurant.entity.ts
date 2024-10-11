@@ -1,3 +1,4 @@
+import { ContactEntity } from "./contact.entity";
 import { ReviewEntity } from "./review.entity";
 
 export class RestaurantEnity{
@@ -10,7 +11,7 @@ export class RestaurantEnity{
         public address:string,
         private averageRating:number,
         public reviews:ReviewEntity[],
-        public contacts:string[],
+        public contacts:ContactEntity[],
     ){}
 
 
