@@ -9,13 +9,13 @@ export class ContactDTO{
 
     static create(object:{[key:string]:any}):[string?,ContactDTO?]{
 
-        const {name,description,restaurantId}= object;
+        const {name,description,restaurant}= object;
 
         if(!name) return ['Name is required']
         if(!description) return ['Description is required'];
-        if(!restaurantId) return ['Restaurant is required']
+        if(!restaurant) return ['Restaurant is required']
 
-        return [undefined, new ContactDTO(name,description,restaurantId)];
+        return [undefined, new ContactDTO(name,description,restaurant)];
     }
     
 

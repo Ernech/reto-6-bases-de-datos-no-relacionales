@@ -21,7 +21,7 @@ export class ContactDatasourceImpl implements ContactDatasource{
             const newContact = await ContactModel.create(data);
             await newContact.save()
             const restaurantContacts = [...restaurantFound.Contacts,newContact];
-            await RestaurantModel.findByIdAndUpdate({_id:restaurant,Contacts:restaurantContacts});
+            await RestaurantModel.findByIdAndUpdate(restaurant,{Contacts:restaurantContacts});
             return ContactMapper.ContactEntityFromObject(newContact);
             
         } catch (error) {
@@ -33,12 +33,13 @@ export class ContactDatasourceImpl implements ContactDatasource{
     }
     async updateContact(contactDTO: ContactDTO, contactId: string): Promise<ContactEntity> {
         try {
+          
             const contact = await ContactModel.findOne({_id:contactId,status:true});
             if(!contact){
                 throw CustomError.notFound(`The contact ${contactId} does not exists`);
             }
             const contactEdited = await ContactModel.findByIdAndUpdate(contactId,{...contactDTO},{new:true});
-            return ContactMapper.ContactEntityFromObject({...contactEdited});
+            return ContactMapper.ContactEntityFromObject(contactEdited!);
         } catch (error) {
             if(error instanceof CustomError){
                 throw error;
@@ -50,8 +51,7 @@ export class ContactDatasourceImpl implements ContactDatasource{
         try {
             const deletedContact = await ContactModel.findByIdAndUpdate(contactId,{status:false},{new:true});
             if(!deletedContact){
-                throw CustomError.notFound(`The contact with the id ${contactId} does not exists`);
-                
+                throw CustomError.notFound(`The contact with the id ${contactId} does not exists`);               
             }
             return ContactMapper.ContactEntityFromObject(deletedContact);
         } catch (error) {
@@ -63,7 +63,11 @@ export class ContactDatasourceImpl implements ContactDatasource{
     }
     async getContactsByRestaurant(restaurantId: string): Promise<ContactEntity[]> {
         try {
-            const restaurant = await RestaurantModel.findOne({_id:restaurantId,status:true});
+            const restaurant = await RestaurantModel.findOne({_id:restaurantId,status:true}).populate({
+                path:'Contacts',
+                model:'Contact',
+                match: { status: true },
+            });
             if(!restaurant){
                 throw CustomError.notFound(`The restaurant with the id: ${restaurantId}`);
             }
