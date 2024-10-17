@@ -1,5 +1,6 @@
 import express, { Router } from 'express';
-
+import swaggerUI  from 'swagger-ui-express';
+import { swaggerSpec } from '../config/swagger';
 interface Options{
     port?:number,
     routes:Router
@@ -23,6 +24,7 @@ export class Server{
          //Middlewares
          this.app.use(express.json());
          this.app.use(express.urlencoded({extended:true}))
+         this.app.use('/api-docs', swaggerUI.serve, swaggerUI.setup(swaggerSpec));
          this.app.use(this.routes);
         
          this.app.listen(this.port,()=>{

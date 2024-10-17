@@ -16,7 +16,6 @@ export class AuthRoutes{
         const authRepository = new AuthRepositoryImpl(dasource)
 
         const controller = new AuthController(authRepository);
-
         router.post('/login',controller.logginUser);
         router.post('/register',controller.registerUser);
         
