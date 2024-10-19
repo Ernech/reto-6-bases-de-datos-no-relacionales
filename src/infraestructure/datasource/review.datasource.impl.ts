@@ -31,7 +31,8 @@ export class ReviewDataSourceImpl implements ReviewDatasource{
     }
    async updateReview(reviewDTO: ReviewDTO, reviewId: string): Promise<ReviewEntity> {
         try{
-              const review = await ReviewModel.findOne({_id:reviewId,user:reviewDTO.userId,status:true});
+              const review = await ReviewModel.findOne({_id:reviewId,user:reviewDTO.userId,status:true})
+              .populate('user');
               if(!review) throw CustomError.notFound('Review Not found');
               review.rating=reviewDTO.rating;
               review.comment=reviewDTO.comment;
@@ -48,7 +49,7 @@ export class ReviewDataSourceImpl implements ReviewDatasource{
     }
     async deleteReview(reviewId: string,userId:string): Promise<ReviewEntity> {
         try{
-            const review = await ReviewModel.findOne({_id:reviewId,user:userId,status:false});
+            const review = await ReviewModel.findOne({_id:reviewId,user:userId,status:false}).populate('user');;
             if(!review) throw CustomError.notFound('Review Not found');
 
             review.status=false;
@@ -64,9 +65,9 @@ export class ReviewDataSourceImpl implements ReviewDatasource{
     }
    async getReviewsByRestaurant(restaurantId: string): Promise<ReviewEntity[]> {
         try {
-            const reviews = await ReviewModel.find({restaurant:restaurantId,status:true});
-            
-            return reviews.map(review=>ReviewMapper.ReviewEntityFromMapper(review));
+            const restaurant = await RestaurantModel.findOne({_id:restaurantId,status:true});
+            if(!restaurant)throw CustomError.notFound('Restaurant Not found');
+            return restaurant.Reviews.map(review=>ReviewMapper.ReviewEntityFromMapper(review));
         } catch (error) {
             if(error instanceof CustomError){
                 throw error;

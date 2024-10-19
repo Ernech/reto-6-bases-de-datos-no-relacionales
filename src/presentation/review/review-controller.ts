@@ -39,7 +39,7 @@ export class ReviewController{
         if(error || !reviewDTO) return res.status(400).json({error});
 
         new UpdateReview(this.reviewRepository).execute(reviewDTO,id)
-        .then(data=>res.status(201).json({ok:true,msg:'Review Created',review:{...data,username:user.name,email:user.email}}))
+        .then(data=>res.status(201).json({ok:true,msg:'Review Updated',review:{...data,username:user.name,email:user.email}}))
         .catch(err=>this.handleError(err,res));
     }
 
