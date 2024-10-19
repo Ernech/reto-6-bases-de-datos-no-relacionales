@@ -139,7 +139,7 @@ export class RestaurantDataSourceImpl implements RestaurantDataSource{
     }
     async searchRestaurants(restaurantName: string): Promise<RestaurantEnity[]> {
        try {
-        const  restaurants = await RestaurantModel.find({name:restaurantName}) .populate({
+        const  restaurants = await RestaurantModel.find({name:{ $regex: '.*' + restaurantName + '.*' }}) .populate({
             path: 'Reviews',
             model:'Review',
             match: { status: true },
