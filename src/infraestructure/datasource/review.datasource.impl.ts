@@ -49,7 +49,7 @@ export class ReviewDataSourceImpl implements ReviewDatasource{
     }
     async deleteReview(reviewId: string,userId:string): Promise<ReviewEntity> {
         try{
-            const review = await ReviewModel.findOne({_id:reviewId,user:userId,status:false}).populate('user');;
+            const review = await ReviewModel.findOne({_id:reviewId,user:userId,status:true}).populate('user');;
             if(!review) throw CustomError.notFound('Review Not found');
 
             review.status=false;
@@ -65,7 +65,15 @@ export class ReviewDataSourceImpl implements ReviewDatasource{
     }
    async getReviewsByRestaurant(restaurantId: string): Promise<ReviewEntity[]> {
         try {
-            const restaurant = await RestaurantModel.findOne({_id:restaurantId,status:true});
+            const restaurant = await RestaurantModel.findOne({_id:restaurantId,status:true}).populate({
+                path: 'Reviews',
+                model:'Review',
+                match: { status: true },
+                populate: {
+                    path: 'user',
+                    model: 'User' 
+                }
+            });
             if(!restaurant)throw CustomError.notFound('Restaurant Not found');
             return restaurant.Reviews.map(review=>ReviewMapper.ReviewEntityFromMapper(review));
         } catch (error) {

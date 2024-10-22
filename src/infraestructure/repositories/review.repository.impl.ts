@@ -20,7 +20,7 @@ export class ReviewRepositoryImpl implements ReviewRepository{
         return await this.reviewDatasource.deleteReview(reviewId,userId);
     }
     async getReviewsByRestaurant(restaurantId: string): Promise<ReviewEntity[]> {
-        return await this.getReviewsByRestaurant(restaurantId);
+        return await this.reviewDatasource.getReviewsByRestaurant(restaurantId);
     }
     
 }
