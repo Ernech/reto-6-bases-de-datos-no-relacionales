@@ -14,7 +14,6 @@ export class ReviewMapper{
         if(!_id) throw CustomError.badRequest('Missing id');
         if(!rating) throw CustomError.badRequest('Missing rating');
         if(!user) throw CustomError.badRequest('Missing User');
-
         const userEntity=UserMapper.userEntityFromObject(user);
         
 

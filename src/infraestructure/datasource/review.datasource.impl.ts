@@ -14,12 +14,18 @@ export class ReviewDataSourceImpl implements ReviewDatasource{
             if(!restaurant) throw CustomError.badRequest("The restaurant does not exists"); 
             
             const newReview = await ReviewModel.create({...reviewDTO,user:userId});
-           
-            (await newReview.save()).populate('user');
+
+            await newReview.save();
+            
+            const newReviewCreated = await ReviewModel.findById(newReview._id).populate({
+                path: 'user',
+                model: 'User' 
+                });
+
             const restaurantReviews = [...restaurant.Reviews, newReview._id];
             const newRating = (restaurant.averageRating + reviewDTO.rating)/restaurantReviews.length;
             await RestaurantModel.findByIdAndUpdate(restaurant._id,{Reviews:restaurantReviews,averageRating:newRating});
-            return ReviewMapper.ReviewEntityFromMapper(newReview);
+            return ReviewMapper.ReviewEntityFromMapper(newReviewCreated!);
 
         } catch (error) {
             if(error instanceof CustomError){
@@ -32,7 +38,10 @@ export class ReviewDataSourceImpl implements ReviewDatasource{
    async updateReview(reviewDTO: ReviewDTO, reviewId: string): Promise<ReviewEntity> {
         try{
               const review = await ReviewModel.findOne({_id:reviewId,user:reviewDTO.userId,status:true})
-              .populate('user');
+              .populate({
+                path: 'user',
+                model: 'User' 
+                });
               if(!review) throw CustomError.notFound('Review Not found');
               review.rating=reviewDTO.rating;
               review.comment=reviewDTO.comment;
